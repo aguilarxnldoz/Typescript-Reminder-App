@@ -4,10 +4,12 @@ import Reminder from "./Reminder";
 /**
  * A grouping of reminders based on tag (case-insensitive)
  */
+// ✅✅✅
 export interface RemindersGroupingByTag {
     [tag: string]: Reminder[];
 }
 
+// ✅✅✅
 export default class RemindersHandler {
     private _reminders: Reminder[];
 
@@ -74,7 +76,7 @@ export default class RemindersHandler {
      * @param description - The full description of reminder
      * @param tag - The keyword used to help categorize reminder
      */
-    // ‼️
+    // ✅
     public modifyReminder(index: number, description: string): void {
         const targetReminder: Reminder = this.getReminder(index);
         targetReminder.description = description;

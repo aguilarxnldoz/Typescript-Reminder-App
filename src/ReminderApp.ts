@@ -3,6 +3,8 @@ import Logger from "./util/ReminderLogger";
 import RemindersHandler from "./RemindersHandler";
 import { EOL } from "node:os";
 
+
+// ✅✅✅
 export default class ReminderApp {
     private _remindersHandler: RemindersHandler;
 
@@ -73,6 +75,7 @@ export default class ReminderApp {
     /**
      * Communicates with user to modify a specific reminder.
      */
+    // ✅
     private handleModifyReminders(): void {
 
         Logger.logReminders(this._remindersHandler.reminders);

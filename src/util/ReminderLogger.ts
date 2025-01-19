@@ -20,6 +20,7 @@ const config: TableUserConfig = {
     },
 };
 
+// ✅✅✅`
 export default class ReminderLogger {
     static readonly MENU = table(data, config);
 
@@ -27,6 +28,7 @@ export default class ReminderLogger {
      * Prints a reminders menu to the console.
      * Leading spaces on each line is first removed
      */
+    // 🦈
     public static logMenu(): void {
         console.log(this.MENU);
     }
@@ -36,6 +38,7 @@ export default class ReminderLogger {
      *
      * @param reminder - reminder instance for task
     */
+   // 🦈
     public static logTag(reminder: Reminder): void {
     console.log(`🏷️  ${reminder.tag.toUpperCase()}`);
 }
@@ -44,7 +47,8 @@ export default class ReminderLogger {
  * Prints tag to console proceeded by 🏷️
 *
 * @param tag - category of reminder
-*/
+*/ 
+    // 🦈
     public static logTagString(tag: string): void {
         console.log(`${EOL}🏷️  ${tag.toUpperCase()}`);
     }
@@ -54,6 +58,7 @@ export default class ReminderLogger {
      * preceded  by 🟢 if reminder status is complete;
      * otherwise, proceeded by ⭕️.
      */
+    // 🦈
     public static logDescription(reminder: Reminder): void {
         if (reminder.isCompleted) {
             console.log(`  🟢 ${reminder.description}`);
@@ -83,6 +88,7 @@ export default class ReminderLogger {
      *
      * @param reminders - list of reminders added
      */
+    // 🦈
     public static logReminders(reminders: Reminder[]): void {
         console.log(EOL);
         reminders.forEach((reminder, index) => {
@@ -95,6 +101,7 @@ export default class ReminderLogger {
      *
      * @param reminders - list of reminders added
      */
+    // 🦈
     public static logSearchResults(reminders: Reminder[]): void {
         if (reminders.length === 0) this.log(`No results found for search.${EOL}`);
         else {
@@ -110,6 +117,7 @@ export default class ReminderLogger {
      *
      * @param msg - message to log
      */
+    // 🦈
     public static log(msg: string): void {
         console.log(msg);
     }
