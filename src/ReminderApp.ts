@@ -71,18 +71,24 @@ export default class ReminderApp {
      * Interfaces with user to toggle completion status of a specific reminder.
      */
 
-
-    // ❌
     private async handleImport(): Promise<void> {
-        const path: string = 'src/reminders.JSON';
+        const fileName = 'src/reminders.JSON';
         try {
-            const remindersData = await this.importReminders(path);
-            const parsedData = this._remindersHandler.jsonParseReminders(remindersData);
-            console.log(parsedData)
-            Logger.log(typeof parsedData);
-            Logger.log('Import Completed🔥');
-        } catch(err) {
-            console.error(err, 'Import failed');
+            const fileContents = await this.importReminders(fileName);
+            const importedData: Array<{_description: string, _tag: string, _isCompleted?: boolean}> = JSON.parse(fileContents);
+    
+            importedData.forEach((reminder) => {
+                this._remindersHandler.addReminder(reminder._description, reminder._tag);
+    
+                if (reminder._isCompleted) {
+                    const lastIndex = this._remindersHandler.size() - 1;
+                    this._remindersHandler.toggleCompletion(lastIndex);
+                }
+            });
+    
+            Logger.log(`${EOL}Imported from "${fileName}"`);
+        } catch (error) {
+            Logger.log(`${error}${EOL}Failed to import Reminders 😔`);
         }
     }
 

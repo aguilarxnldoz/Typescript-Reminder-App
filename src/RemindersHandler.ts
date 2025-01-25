@@ -164,7 +164,12 @@ export default class RemindersHandler {
         return this.reminders.filter((task) => task.description.includes(keyword))
     }
 
+    public turnToReminders(jsonList: object[]) {
+        return jsonList.map((singleReminder) => {
+            
 
+        })
+    }
 
 
     public jsonParseReminders(data: string): object[] {
