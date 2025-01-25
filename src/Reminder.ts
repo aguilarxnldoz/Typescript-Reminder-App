@@ -27,7 +27,6 @@ export default class Reminder {
      */
     // ✅
     public get description(): string {
-        if (!this._description) throw new Error("Not yet implemented");
         return this._description;
     }
 
@@ -72,4 +71,6 @@ export default class Reminder {
     public toggleTheCompletion(): void {
         this._isCompleted = !this._isCompleted;
     }
+    
+
 }

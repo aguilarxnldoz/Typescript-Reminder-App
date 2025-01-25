@@ -2,6 +2,10 @@ import readlineSync from "readline-sync";
 import Logger from "./util/ReminderLogger";
 import RemindersHandler from "./RemindersHandler";
 import { EOL } from "node:os";
+import fs from "node:fs/promises";
+import Reminder from "./Reminder";
+import { parse } from "node:path";
+
 
 
 // ✅✅✅
@@ -20,8 +24,8 @@ export default class ReminderApp {
      * from one of six menu items.
      */
     // 🦈
-    public start(): void {
-        let exitFlag = false;
+    public async start(): Promise<void> {
+        let exitFlag: boolean = false;
         for (;;) {
             const item: string = ReminderApp.handleMenuSelection();
             switch (item) {
@@ -44,11 +48,20 @@ export default class ReminderApp {
                 case "5":
                     this.handleToggleCompletion();
                     break;
-
+                case "6":
+                    await this.handleExport();
+                    break;
+                    // ❌
+                case "7":
+                    await this.handleImport();
+                    break;
+                case "8":
+                    exitFlag = true
+                    console.log("Invalid Option");
                 default:
-                    exitFlag = true;
                     break;
             }
+            
             if (exitFlag) break;
         }
         Logger.log(`${EOL}  ❌  Exited application${EOL}`);
@@ -58,8 +71,49 @@ export default class ReminderApp {
      * Interfaces with user to toggle completion status of a specific reminder.
      */
 
+
+    // ❌
+    private async handleImport(): Promise<void> {
+        const path: string = 'src/reminders.JSON';
+        try {
+            const remindersData = await this.importReminders(path);
+            const parsedData = this._remindersHandler.jsonParseReminders(remindersData);
+            console.log(parsedData)
+            Logger.log(typeof parsedData);
+            Logger.log('Import Completed🔥');
+        } catch(err) {
+            console.error(err, 'Import failed');
+        }
+    }
+
+    // Writes the list of reminders to a json file.
+    private async handleExport(): Promise<void> {
+        const remindersList: Reminder[] = this._remindersHandler.reminders;
+        const exportContent: string = this._remindersHandler.prepareExportJSON(remindersList);
+        try {
+            if (remindersList.length === 0) throw new Error;
+            await this.exportReminders(exportContent);
+            Logger.log('Successfully exported reminders to JSON file 🔥');
+        } catch (err) {
+            console.error('Export failed, no reminders');
+        }
+    }
+
+
+    private async importReminders(location: string): Promise<string> {
+        const dataFormat = await fs.readFile(location, 'utf8');
+        return dataFormat;
+    }
+
+
+    // Exports reminders to a JSON file
+    private async exportReminders(content: string): Promise<void> {
+        await fs.writeFile('src/reminders.JSON', content, 'utf8');
+    }
+
     // ✅
     private handleToggleCompletion(): void {
+
 
         if (this._remindersHandler.reminders.length === 0) {
             Logger.log(`${EOL}  ⚠️  You have no reminders`)
@@ -241,7 +295,7 @@ export default class ReminderApp {
     // 🦈
     private static getMenuItem(): string {
         const item: string = readlineSync.question("Choose a [Number] followed by [Enter]: ", {
-            limit: ["1", "2", "3", "4", "5", "6"],
+            limit: ["1", "2", "3", "4", "5", "6", "7", "8"],
             limitMessage: `${EOL}  🚨  Sorry, input is not a valid menu item.${EOL}`,
         });
         return item;

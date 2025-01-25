@@ -10,7 +10,9 @@ const data = [
     ["3", "Add reminder ➕"],
     ["4", "Modify reminders 📝"],
     ["5", "Toggle completion ✅"],
-    ["6", "Exit 👋"],
+    ["6", "Export Reminders 📜"],
+    ["7", "Import Reminders ⬇️"],
+    ["8", "Exit 👋"],
 ];
 
 const config: TableUserConfig = {

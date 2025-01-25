@@ -1,6 +1,14 @@
 import { get } from "node:http";
 import Reminder from "./Reminder";
 
+
+
+
+
+
+
+
+  
 /**
  * A grouping of reminders based on tag (case-insensitive)
  */
@@ -26,6 +34,10 @@ export default class RemindersHandler {
     // ✅
     public get reminders(): Reminder[] {
         return this._reminders;
+    }
+
+    public set importedReminders(reminders: Reminder[]) {
+        this._reminders = reminders;
     }
 
     /**
@@ -150,5 +162,16 @@ export default class RemindersHandler {
     // ✅
     private searchDescriptions(keyword: string): Reminder[] {
         return this.reminders.filter((task) => task.description.includes(keyword))
+    }
+
+
+
+
+    public jsonParseReminders(data: string): object[] {
+        return JSON.parse(data);
+    }
+  
+    public prepareExportJSON(reminders: Reminder[]): string {
+        return JSON.stringify(reminders, null, 2);
     }
 }
