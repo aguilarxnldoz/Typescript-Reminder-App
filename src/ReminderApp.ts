@@ -23,7 +23,7 @@ export default class ReminderApp {
      * Starts application and continually prompts user to choose
      * from one of six menu items.
      */
-    // 🦈
+    // 🦈 ✅
     public async start(): Promise<void> {
         let exitFlag: boolean = false;
         for (;;) {
@@ -51,7 +51,6 @@ export default class ReminderApp {
                 case "6":
                     await this.handleExport();
                     break;
-                    // ❌
                 case "7":
                     await this.handleImport();
                     break;
@@ -70,7 +69,8 @@ export default class ReminderApp {
     /**
      * Interfaces with user to toggle completion status of a specific reminder.
      */
-
+    // ✅
+    // imports reminders from a JSON file and replaces the current list of reminders
     private async handleImport(): Promise<void> {
         const fileName = 'src/reminders.JSON';
         try {
@@ -92,6 +92,7 @@ export default class ReminderApp {
         }
     }
 
+    // ✅
     // Writes the list of reminders to a json file.
     private async handleExport(): Promise<void> {
         const remindersList: Reminder[] = this._remindersHandler.reminders;
@@ -105,13 +106,14 @@ export default class ReminderApp {
         }
     }
 
-
+    // ✅
+    // reads a file
     private async importReminders(location: string): Promise<string> {
         const dataFormat = await fs.readFile(location, 'utf8');
         return dataFormat;
     }
 
-
+    // ✅ 
     // Exports reminders to a JSON file
     private async exportReminders(content: string): Promise<void> {
         await fs.writeFile('src/reminders.JSON', content, 'utf8');
